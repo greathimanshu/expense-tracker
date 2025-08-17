@@ -4,16 +4,16 @@
 
         <!-- Start Logo -->
         <div class="sidebar-logo">
-            <a href="{{ route('admin.dashboard') }}" wire:navigate class="logo logo-normal">
+            <a href="{{ route('dashboard') }}" wire:navigate class="logo logo-normal">
                 <img src="{{ asset('assets/img/logo.svg') }}" alt="Logo">
             </a>
-            <a href="{{ route('admin.dashboard') }}" wire:navigate class="logo-small">
+            <a href="{{ route('dashboard') }}" wire:navigate class="logo-small">
                 <img src="{{ asset('assets/img/logo-small.svg') }}" alt="Logo">
             </a>
-            <a href="{{ route('admin.dashboard') }}" wire:navigate class="dark-logo">
+            <a href="{{ route('dashboard') }}" wire:navigate class="dark-logo">
                 <img src="{{ asset('assets/img/logo-white.svg') }}" alt="Logo">
             </a>
-            <a href="{{ route('admin.dashboard') }}" wire:navigate class="dark-small">
+            <a href="{{ route('dashboard') }}" wire:navigate class="dark-small">
                 <img src="{{ asset('assets/img/logo-small-white.svg') }}" alt="Logo">
             </a>
 
@@ -32,15 +32,9 @@
 
                     <li>
                         <ul>
-                            <li @if(request()->routeIs('admin.dashboard')) class="active" @endif>
-                                <a href="{{ route('admin.dashboard') }}" wire:navigate>
+                            <li @if(request()->routeIs('dashboard')) class="active" @endif>
+                                <a href="{{ route('dashboard') }}" wire:navigate>
                                     <i class="isax isax-home-1"></i><span>Dashboard</span>
-                                </a>
-                            </li>
-
-                            <li @if(request()->routeIs('admin.users')) class="active" @endif>
-                                <a href={{ route('admin.users') }} wire:navigate>
-                                    <i class="isax isax-user"></i><span>Users</span>
                                 </a>
                             </li>
 

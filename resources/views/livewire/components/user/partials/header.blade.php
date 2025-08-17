@@ -63,8 +63,8 @@
                                         class="rounded-circle">
                                 </span>
                                 <div>
-                                    <h6 class="fs-14 fw-medium mb-1">Jafna Cremson</h6>
-                                    <p class="fs-13">Administrator</p>
+                                    <h6 class="fs-14 fw-medium mb-1">{{ Auth::user()->name }}</h6>
+                                    <p class="fs-13">User</p>
                                 </div>
                             </div>
 

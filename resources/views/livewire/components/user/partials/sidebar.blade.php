@@ -32,26 +32,20 @@
 
                     <li>
                         <ul>
-                            <li @if(request()->routeIs('dashboard')) class="active" @endif>
+                            <li @if (request()->routeIs('dashboard')) class="active" @endif>
                                 <a href="{{ route('dashboard') }}" wire:navigate>
                                     <i class="isax isax-home-1"></i><span>Dashboard</span>
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="#">
+                            <li @if (request()->routeIs('expenses')) class="active" @endif>
+                                <a href="{{ route('expenses') }}" wire:navigate>
                                     <i class="isax isax-wallet"></i><span>Expenses</span>
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="#">
-                                    <i class="isax isax-money-recive"></i><span>Incomes</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#">
+                            <li @if (request()->routeIs('categories')) class="active" @endif>
+                                <a href="{{ route('categories') }}">
                                     <i class="isax isax-category"></i><span>Categories</span>
                                 </a>
                             </li>

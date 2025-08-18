@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('icon')->nullable();
+            $table->boolean('is_default')->default(false);
             $table->string('color', 20)->nullable();
             $table->decimal('monthly_budget', 15, 2)->nullable();
             $table->enum('type', ['expense', 'income'])->default('expense');

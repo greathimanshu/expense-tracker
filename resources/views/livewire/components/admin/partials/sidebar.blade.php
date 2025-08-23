@@ -32,18 +32,23 @@
 
                     <li>
                         <ul>
-                            <li @if(request()->routeIs('admin.dashboard')) class="active" @endif>
+                            <li @if (request()->routeIs('admin.dashboard')) class="active" @endif>
                                 <a href="{{ route('admin.dashboard') }}" wire:navigate>
                                     <i class="isax isax-home-1"></i><span>Dashboard</span>
                                 </a>
                             </li>
 
-                            <li @if(request()->routeIs('admin.users')) class="active" @endif>
+                            <li @if (request()->routeIs('admin.users')) class="active" @endif>
                                 <a href={{ route('admin.users') }} wire:navigate>
                                     <i class="isax isax-user"></i><span>Users</span>
                                 </a>
                             </li>
 
+                            <li @if (request()->routeIs('admin.categories')) class="active" @endif>
+                                <a href="{{ route('admin.categories') }}" wire:navigate>
+                                    <i class="isax isax-category"></i><span>Categories</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="#">
                                     <i class="isax isax-wallet"></i><span>Expenses</span>
@@ -53,12 +58,6 @@
                             <li>
                                 <a href="#">
                                     <i class="isax isax-money-recive"></i><span>Incomes</span>
-                                </a>
-                            </li>
-
-                            <li @if(request()->routeIs('admin.categories')) class="active" @endif>
-                                <a href="{{ route('admin.categories') }}" wire:navigate>
-                                    <i class="isax isax-category"></i><span>Categories</span>
                                 </a>
                             </li>
 

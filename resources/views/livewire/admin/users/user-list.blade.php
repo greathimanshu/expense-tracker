@@ -23,9 +23,9 @@
                     </ul>
                 </div>
                 <div>
-                    <a href="add-customer.html" class="btn btn-primary d-flex align-items-center">
-                        <i class="isax isax-add-circle5 me-1"></i>New Customer
-                    </a>
+                    <a href="javascript:void(0);" class="btn btn-primary d-flex align-items-center"
+                        data-bs-toggle="modal" data-bs-target="#add_user"><i class="isax isax-add-circle5 me-1"></i>New
+                        User</a>
                 </div>
             </div>
         </div>
@@ -209,7 +209,7 @@
                                     </li>
                                     <li>
                                         <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center"
-                                            data-bs-toggle="modal" data-bs-target="#delete_modal"><i
+                                            wire:click="confirmDelete({{ $item->id }}, @js($item->name))"><i
                                                 class="isax isax-trash me-2"></i>Delete</a>
                                     </li>
                                 </ul>
@@ -223,25 +223,133 @@
 
                 </tbody>
             </table>
+            <div class="mt-3">
+                {{ $users->links('livewire::bootstrap') }}
+            </div>
         </div>
     </div>
+    <div id="add_user" class="modal fade" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        {{ $userId ? 'Edit User' : 'Add New User' }}
+                    </h4>
+                    <button type="button" class="btn-close btn-close-modal custom-btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"><i class="fa-solid fa-x"></i></button>
+                </div>
+
+                <form wire:submit.prevent="save">
+                    <div class="modal-body">
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" wire:model="name">
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" wire:model="email">
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Password {!! $userId
+                                    ? '<small class="text-muted">(leave blank to keep current)</small>'
+                                    : '<span class="text-danger">*</span>' !!}
+                            </label>
+                            <input type="password" class="form-control" wire:model="password">
+                            @if (!$userId)
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            @endif
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" wire:model="phone">
+                            @error('phone')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Status -->
+                        <div class="mb-3">
+                            <label class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-select" wire:model="status">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                            @error('status')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-white" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            {{ $userId ? 'Update' : 'Create' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete Modal Start -->
-    <div class="modal fade" id="delete_modal">
+    <div class="modal fade" id="delete_modal" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <div class="mb-3">
-                        <img src="assets/img/icons/delete.svg" alt="img">
+                        <img src="{{ asset('assets/img/icons/delete.svg') }}" alt="img">
                     </div>
-                    <h6 class="mb-1">Delete Customer</h6>
-                    <p class="mb-3">Are you sure, you want to delete Customer?</p>
+                    <h6 class="mb-1">Delete <p class="d-inline-block text-danger">{{ $name }}</p> Category
+                    </h6>
+                    <p class="mb-3">Are you sure you want to delete this category?</p>
                     <div class="d-flex justify-content-center">
-                        <a href="javascript:void(0);" class="btn btn-outline-white me-3"
-                            data-bs-dismiss="modal">Cancel</a>
-                        <a href="customers.html" class="btn btn-primary">Yes, Delete</a>
+                        <button type="button" class="btn btn-outline-white me-3"
+                            data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" wire:click="delete" class="btn btn-danger">Yes, Delete</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@push('scripts')
+    <script>
+        Livewire.on("open-modal", () => {
+            let modal = new bootstrap.Modal(document.getElementById("add_user"));
+            modal.show();
+        });
+
+        Livewire.on("close-modal", () => {
+            let modalEl = document.getElementById("add_user");
+            let modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+        });
+
+        Livewire.on("open-delete-modal", () => {
+            let modal = new bootstrap.Modal(document.getElementById("delete_modal"));
+            modal.show();
+        });
+
+        Livewire.on("close-delete-modal", () => {
+            let modalEl = document.getElementById("delete_modal");
+            let modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+        });
+    </script>
+@endpush

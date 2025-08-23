@@ -33,9 +33,11 @@
                 <div class="d-flex align-items-center flex-wrap gap-2">
                     <div class="table-search d-flex align-items-center mb-0">
                         <div class="search-input">
-                            <input type="text" placeholder="Search" class="form-control" id="search">
-                            <a href="javascript:void(0);" class="btn-searchset"><i
-                                    class="isax isax-search-normal fs-12"></i></a>
+                            <input type="text" placeholder="Search" class="form-control"
+                                wire:model.live.debounce.500ms="search">
+                            <a href="javascript:void(0);" class="btn-searchset">
+                                <i class="isax isax-search-normal fs-12"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -93,7 +95,7 @@
                                     <input class="form-check-input" type="checkbox" id="customCheck1">
                                 </div>
                             </td>
-                            <td><i class="{{ $category->icon }}"></i>
+                            <td><i class="{{ $category->icon }}" data-bs-toggle="tooltip" title="{{ $category->icon }}" ></i>
                             </td>
                             <td>{{ $category->name }}</td>
                             <td>
@@ -213,7 +215,8 @@
                     <div class="mb-3">
                         <img src="{{ asset('assets/img/icons/delete.svg') }}" alt="img">
                     </div>
-                    <h6 class="mb-1">Delete <p class="d-inline-block text-danger">{{$name}}</p> Category</h6>
+                    <h6 class="mb-1">Delete <p class="d-inline-block text-danger">{{ $name }}</p> Category
+                    </h6>
                     <p class="mb-3">Are you sure you want to delete this category?</p>
                     <div class="d-flex justify-content-center">
                         <button type="button" class="btn btn-outline-white me-3"

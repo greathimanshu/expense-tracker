@@ -33,6 +33,8 @@ class CategorList extends Component
         'type' => 'required|in:expense,income',
     ];
 
+    protected $queryString = ['search']; // optional: keep search in URL
+
     public function save()
     {
         $this->validate();
@@ -110,16 +112,24 @@ class CategorList extends Component
         $this->sortDirection = $direction;
         $this->resetPage();
     }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
     #[Title('Users | Expenses Tracker')]
     #[Layout('components.admin.app')]
     public function render()
     {
         $categories = Category::orderBy($this->sortField, $this->sortDirection)
-            ->when(
-                $this->search,
-                fn($q) =>
-                $q->where('name', 'like', "%{$this->search}%")
-            )
+            ->when($this->search, function ($q) {
+                $q->where(function ($query) {
+                    $query->where('name', 'like', "%{$this->search}%")
+                        ->orWhere('icon', 'like', "%{$this->search}%")
+                        ->orWhere('color', 'like', "%{$this->search}%")
+                        ->orWhere('type', 'like', "%{$this->search}%");
+                });
+            })
             ->paginate($this->perPage);
 
         return view('livewire.admin.category.categor-list', [

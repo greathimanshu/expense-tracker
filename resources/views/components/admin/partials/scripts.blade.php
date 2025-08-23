@@ -1,3 +1,4 @@
+@livewireScripts
 <!-- jQuery -->
 <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}" type="860243bf1d6186b7b76a782f-text/javascript"></script>
 
@@ -36,4 +37,5 @@
 <script src="{{asset('assets/js/dataTables.bootstrap5.min.js')}}" type="01ecfb88e2cfd0068a9aaef8-text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
-@livewireScripts
+
+

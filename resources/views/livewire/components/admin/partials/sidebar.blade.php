@@ -56,8 +56,8 @@
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="#">
+                            <li @if(request()->routeIs('admin.categories')) class="active" @endif>
+                                <a href="{{ route('admin.categories') }}" wire:navigate>
                                     <i class="isax isax-category"></i><span>Categories</span>
                                 </a>
                             </li>
